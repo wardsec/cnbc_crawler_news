@@ -28,3 +28,58 @@ Este Projeto faz parte de um outro Projeto Privado que tem a afinidade de usar N
 - Este script depende de técnicas de crawling e pode estar sujeito a alterações na estrutura do site da CNBC.
 - Use com responsabilidade e esteja ciente dos termos de serviço da CNBC e de quaisquer restrições legais.
 
+## Fluxo de NLP atualmente implementado em prod.
+O Fluxo abaixo é uma representação do que foi implementado com este scapper.
+
+```python
+  +-------------------+       +--------------------------+
+  | Coleta de Notícias| ----> | Pré-processamento de Texto |
+  +-------------------+       +--------------------------+ |
+    Uso da lib CNBScrapper     |Utilização de técnicas como|
+    para coletar noticias      |tokenização, remoção de    |
+    via cnbc.                  |stopwords e stemming       |
+               |                         |
+               v                         v
+  +----------------------+    +-------------------------+
+  |Extração de Informações|--> | Avaliação de Sentimento  |
+  +----------------------+    +-------------------------+
+    Identificação de           |  Análise do texto para    |
+    entidades relevantes,      |  determinar o sentimento  |
+    eventos e datas.           |  usando léxicos           |
+    
+               |                         |  
+               v                         v
+  +----------------------+    +-------------------------+
+  |  Análise de Impacto  |     | Tomada de Decisão         |
+  +----------------------+     | de Compra/Venda           |
+    Avaliação da relevância    | Baseada em métricas de
+    e impacto das notícias     | impacto, como correlação
+    sobre os ativos.           | com histórico de preços.
+               |                         |                  |
+               v                         v                  |
+  +----------------------+    +-------------------------+
+  | Notícia Indica Venda |    |    Enviar Ordem para        |
+  | Palavras-chave:      |    |    Corretora (Binance)      |
+  | regulamentação, hack,|    +-------------------------+
+  | proibição            |      Uso da biblioteca CCXT
+  +----------------------+      para enviar
+                              +-------------------------+
+               |                         |
+               v                         |
+  +----------------------+               |
+  | Notícia Indica Compra|               |
+  | Palavras-chave:      |               |
+  | adoção, parceria,    |               |
+  | integração           |               |
+  +----------------------+               |
+    Decisão de compra     |              |
+    baseada na análise    |              |
+    positiva das notícias |              |
+               |                         |
+               v                         |
+  +---------------------------------------+
+  |         Fim do Fluxo                  |
+  +---------------------------------------+
+
+
+```
